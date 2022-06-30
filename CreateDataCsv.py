@@ -35,7 +35,7 @@ def cfar100ToDf(picklePath, chosen_label=2):
                              'train/validation/test': 'train'})
     df_train['label_name']=df_train['label_number'].apply(create_labelname)
 
-    # rest dataFrame
+    # test dataFrame
     df_test = pd.DataFrame({'file_name': test[b'filenames'], 'batch_label': test[b'batch_label'],
                             'label_number': test[b'coarse_labels'], 'dataset': 'cfar100',
                             'train/validation/test': 'test'})
@@ -45,9 +45,10 @@ def cfar100ToDf(picklePath, chosen_label=2):
     # filter class, append train+test
     chosen_label_df = df_train[df_train['label_number'] == chosen_label].append(
         df_test[df_test['label_number'] == chosen_label])
+    chosen_label_df['id'] = np.arange(60001, 63001)
 
     # reorder columns
-    cols=['file_name','batch_label', 'label_number', 'label_name', 'dataset','train/validation/test']
+    cols=['id', 'image_name','batch_label', 'label_number', 'label_name', 'dataset','train/validation/test']
     chosen_label_df=chosen_label_df[cols]
     print(chosen_label_df)
     data_to_csv(chosen_label_df)
