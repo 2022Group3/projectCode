@@ -55,23 +55,23 @@ def cfar100ToDf(picklePath, chosen_label=2):
 
 # create dataFrame from batch
 def batch_df(dict,label_names,batch,batch_num):
+    # tain/validation/testv
+    if batch=='test_batch':
+        type='test'
+    else:
+        type='train'
+    #create dataframe
     df = pd.DataFrame({'id':np.arange(batch_num*10000-9999,batch_num*10000+1),'image_name':dict[b'filenames'],
-                       'batch_label':batch,'label_number':dict[ b'labels'],'dataset':'cifar10'})
+                       'batch_label':batch,'label_number':dict[ b'labels'],'dataset':'cifar10','tain/validation/test':type})
     # label names
     label_names_array = []
     for i in df['label_number']:
         label_names_array.append(label_names[i])
     df['label_name'] = label_names_array
-    # tain/validation/test
-    if batch=='test_batch':
-        type='test'
-    else:
-        type='train'
-    data_type=np.full((len(dict[b'labels']),1),type)
-    df['tain/validation/test']=data_type
+
     # reorder columns
     cols=['id','image_name','batch_label','label_number','label_name','dataset','tain/validation/test']
-    chosen_label_df = df[cols]
+    df = df[cols]
     return df
 
 # def batch_df(dict,label_names,batch,batch_num):
