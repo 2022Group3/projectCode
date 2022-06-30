@@ -13,6 +13,7 @@ def unpickle(file):
     return dict
 
 
+
 # write to csv
 def data_to_csv(data):
     data.to_csv('data.csv',mode='a',index=False,header=False)
@@ -105,3 +106,4 @@ if __name__ == '__main__':
      label_names = meta_data[b'label_names']
      cifar10Df(batch_file,label_names)
      cfar100ToDf("C:\פרוייקט בוטקמפ\dataset\cifar-100-python")
+     #hello
