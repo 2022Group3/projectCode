@@ -22,9 +22,9 @@ class Statistics:
         sns.countplot(x='label_name', data=typeDF)
         plt.show()
 
-
-if __name__ == '__main__':
-    st=Statistics(r"C:\פרוייקט בוטקמפ\projectCode\data.csv")
-    st.dataSize()
-    # st.distPerClass()
-    st.typeDistPerClass('test')
+#
+# if __name__ == '__main__':
+#     st=Statistics(r"C:\פרוייקט בוטקמפ\projectCode\data.csv")
+#     st.dataSize()
+#     # st.distPerClass()
+#     st.typeDistPerClass('test')
