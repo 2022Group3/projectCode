@@ -94,7 +94,7 @@ if __name__ == '__main__':
      meta_file = r"C:\D\bootcamp\project\dataset\cifar-10-batches-py\batches.meta"
      meta_data = unpickle(meta_file)
      label_names = meta_data[b'label_names']
-     cols = ['image_name','batch_label','label_number','label_name','dataset','tain/validation/test']
+     cols = ['image_name','batch_label','label_number','label_name','dataset','train/validation/test']
      cifar10Df(batch_file,label_names,cols)
      cfar100_file=r"C:\D\bootcamp\project\dataset\cifar-100-python"
      cfar100ToDf(cfar100_file)
