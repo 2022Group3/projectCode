@@ -64,7 +64,7 @@ def batch_df(dict,label_names,batch,batch_num):
         return name
     #create dataframe
     df = pd.DataFrame({'image_name':dict[b'filenames'],
-                       'batch_label':batch,'label_number':dict[ b'labels'],'label_name':"",'dataset':'cifar10','tain/validation/test':type})
+                       'batch_label':batch,'label_number':dict[ b'labels'],'label_name':"",'dataset':'cifar10','train/validation/test':type})
     df['label_name']=df['label_number'].apply(create_labelname)
     return df
 
