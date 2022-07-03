@@ -1,1 +1,25 @@
 #display!!!!!!!!!!!!!
+from PIL import Image
+import numpy as np
+from matplotlib import pyplot as plt
+
+def display_image(imageArray):
+
+    array=imageArray
+    array = np.reshape(array, (32,32,3))
+    im = Image.fromarray(array)
+    im.save("filename.jpeg")
+    im.show()
+
+#def unpickle(file):
+ #   import pickle
+   # with open(file, 'rb') as fo:
+   #     dict = pickle.load(fo, encoding='bytes')
+   # return dict
+if __name__ == '__main__':
+   #batch_file=r"C:\הנדסאים שנה ב\בוטקאמפ\פרוייקט\cifar-10-python (1)\data_batch_3"
+  # dict=unpickle(batch_file)
+   display_image(dict[b'data'][1000])
+
+   #im = Image.open(r"C:\Users\1\Downloads\86289.jpg")
+   #im.show()
