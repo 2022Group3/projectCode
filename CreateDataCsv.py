@@ -51,7 +51,7 @@ def cfar100ToDf(picklePath,chosen_label=2):
 
 # create dataFrame from batch
 def batch_df(dict,label_names,batch,batch_num):
-    # tain/validation/test
+    # train/validation/test
     if batch=='test_batch':
         type='test'
     else:
