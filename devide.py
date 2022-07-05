@@ -20,9 +20,7 @@ def train_validate_test_split(csv_data, train_percent=0.6, validate_percent=0.1,
     dataframe.to_csv('df.csv')
     return dataframe
 
-# def train_validate_test_split(csv_data, train_percent=0.6, validate_percent=0.1):
-#     df = pd.read_csv(csv_data)
-#     df.drop('train/validation/test', inplace=True, axis=1)
+
 
 if __name__ == '__main__':
     file=r"C:\D\bootcamp\project\projectCode\data.csv"
