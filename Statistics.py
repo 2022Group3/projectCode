@@ -83,9 +83,11 @@ class Statistics:
 
 
 if __name__ == '__main__':
-    st=Statistics(r"C:\D\bootcamp\project\projectCode\data.csv")
+    st=Statistics(r"C:\D\bootcamp\project\projectCode\df.csv")
     # st.dataSize()
     st.distPerClass()
+    st.typeDistPerClass('train')
     st.typeDistPerClass('validation')
+    st.typeDistPerClass('test')
     # print(len(st.df[st.df['train/validation/test']=='train']))
     st.distribution_of_train_validation_test(pie=True)
