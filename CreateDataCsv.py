@@ -88,15 +88,26 @@ def cifar10Df(batch_file,label_names,cols):
     data_to_csv(df)
 # Press the green button in the gutter to run the script.
 
+def ourPicturesDf(path):
+    dict = unpickle(path)
+    df = pd.DataFrame({'image_name': dict[b'filenames'],
+                       'batch_label': "", 'label_number':dict[b'label_num'], 'label_name': dict[b'label_name'], 'dataset': 'our',
+                       'train/validation/test': "test"})
+    data_to_csv(df)
+
 
 
 if __name__ == '__main__':
-     batch_file=r"C:\D\bootcamp\project\dataset\cifar-10-batches-py"
-     meta_file = r"C:\D\bootcamp\project\dataset\cifar-10-batches-py\batches.meta"
+     batch_file=r"C:\הנדסאים שנה ב\בוטקאמפ\פרוייקט\cifar-10-python (1)"
+     meta_file = r"C:\הנדסאים שנה ב\בוטקאמפ\פרוייקט\cifar-10-python (1)\batches.meta"
      meta_data = unpickle(meta_file)
      label_names = meta_data[b'label_names']
      cols = ['image_name','batch_label','label_number','label_name','dataset','train/validation/test']
      cifar10Df(batch_file,label_names,cols)
-     cfar100_file=r"C:\D\bootcamp\project\dataset\cifar-100-python"
+     cfar100_file=r"C:\הנדסאים שנה ב\בוטקאמפ\פרוייקט\cifar-100-python"
      cfar100ToDf(cfar100_file)
+     ourPictures_file=r"C:\הנדסאים שנה ב\בוטקאמפ\פרוייקט\our_test"
+     ourPicturesDf(ourPictures_file)
+
+
 
