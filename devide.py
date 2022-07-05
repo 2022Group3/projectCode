@@ -1,1 +1,1 @@
-#devide to train ,validation and test
+#devide to train ,validation and test f
