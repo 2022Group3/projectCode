@@ -23,7 +23,7 @@ def unpickle(file):
 
 
 if __name__ == '__main__':
-   batch_file=r"C:\פרוייקט בוטקמפ\dataset\cifar-10-batches-py\data_batch_1"
+   batch_file=r"C:\D\bootcamp\project\dataset\cifar-10-batches-py\data_batch_1"
    dict=unpickle(batch_file)
    display_image(dict[b'data'][4])
 

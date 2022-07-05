@@ -88,4 +88,4 @@ if __name__ == '__main__':
     st.distPerClass()
     st.typeDistPerClass('validation')
     # print(len(st.df[st.df['train/validation/test']=='train']))
-    # st.distribution_of_train_validation_test(pie=True)
+    st.distribution_of_train_validation_test(pie=True)
