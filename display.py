@@ -20,17 +20,20 @@ def createPlotOnFigByClass(numIMG,className,fig,indexFig,heightFig):
 
 def displayIMGbyClass(numIMG,className):
     fig = plt.figure(figsize=(10, 10))
+    fig.suptitle("display "+className)
     createPlotOnFigByClass(numIMG, className, fig, 1,1)
     plt.show()
 
 def displaySampleFromDataset(numIMG):
     indexFig=1
     fig = plt.figure(figsize=(10, 10))
+    fig.suptitle('display sample')
     datasetImages=os.path.join(params.base_dir,"datasetImages")
     for label in os.listdir(datasetImages):
         createPlotOnFigByClass(numIMG, label, fig, indexFig, 10+len(params.chosen_label))
         indexFig+=numIMG
     plt.show()
+
 
 
 if __name__ == '__main__':
