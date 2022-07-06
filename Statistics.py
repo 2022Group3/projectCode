@@ -9,7 +9,7 @@ import seaborn
 
 
 
-file=r"C:\הנדסאים שנה ב\בוטקאמפ\פרוייקט\projectCode\df.csv"
+file=r"C:\Users\אפרת\Downloads\df.csv"
 df =pd.read_csv(file)
 
 def dataSize():
@@ -18,7 +18,7 @@ def dataSize():
 def distPerClass():
 
     sns.countplot(x='label_name',data=df).set(title="classes of all data distribution")
-    plt.xticks(rotation=45, ha='right')
+    plt.xticks(rotation=90, ha='right')
     # sns.distplot(trainDF['label_name'])
     plt.tight_layout()
     plt.show()
@@ -27,7 +27,7 @@ def typeDistPerClass(type):
     typeDF=df[df['train/validation/test']==type]
     if(len(typeDF)>0):
         sns.countplot(x='label_name', data=typeDF).set(title=type)
-        plt.xticks(rotation=45, ha='right')
+        plt.xticks(rotation=90, ha='right')
         plt.tight_layout()
         plt.show()
     else:
