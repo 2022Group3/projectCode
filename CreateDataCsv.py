@@ -1,13 +1,10 @@
 import pandas as pd
 from os.path import exists
 import os
+import params
 
-import numpy as np
-
-
-cols = ['image_name', 'batch_label', 'original_label_number', 'current_label_number', 'label_name', 'dataset', 'train/validation/test']
-base_dir = r"C:\פרוייקט בוטקמפ\dataset"
-
+cols = params.csv_cols
+base_dir = params.base_dir
 
 # unpickle
 def unpickle(file):
@@ -26,14 +23,13 @@ def data_to_csv(dataFrame):
 
 
 # create dataFrame from cfar100
-def cfar100_to_df(chosen_label=[1,2,3,4,5]):
+def cfar100_to_df():
     train = unpickle(f'{base_dir}\\cifar-100-python\\train')
     test = unpickle(f'{base_dir}\\cifar-100-python\\test')
     names = unpickle(f'{base_dir}\\cifar-100-python\\meta')[b'coarse_label_names']
     train_current_labels = [x+10 for x in train[b'coarse_labels']]
     test_current_labels = [x+10 for x in test[b'coarse_labels']]
-    print(test_current_labels)
-
+    chosen_label = params.chosen_label
     # train dataFrame
     df_train = pd.DataFrame({cols[0]: train[b'filenames'], cols[1]: 'train', cols[2]: train[b'coarse_labels'],
                              cols[3]: train_current_labels, cols[4]: "", cols[5]: 'cfar100', cols[6]: ''})
