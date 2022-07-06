@@ -1,31 +1,29 @@
-#display!!!!!!!!!!!!!
-from PIL import Image
-import numpy as np
-from matplotlib import pyplot as plt
+import os
+from random import sample
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+def displayIMGbyClass(base_dir,numIMG,className):
+    fig = plt.figure(figsize=(32,32))
+    pathToLabel=os.path.join(base_dir,"datasetImages")
+    pathToLabel=os.path.join(pathToLabel,className)
+    images=os.listdir(pathToLabel)
+    images=sample(images,numIMG)
+    for i in range(len(images)):
+        pathToIMG = os.path.join(pathToLabel,images[i])
+        ax = fig.add_subplot(1,numIMG, i+1)
+        img = mpimg.imread(pathToIMG)
+        imgplot = plt.imshow(img)
+        ax.set_title(images[i])
 
-def display_image(array):
 
-    rgbArray = np.zeros((32, 32, 3), 'uint8')
-    rgbArray[..., 0] = array[:1024].reshape(32, 32)
-    rgbArray[..., 1] = array[1024:2048].reshape(32, 32)
-    rgbArray[..., 2] = array[2048:3072].reshape(32, 32)
-    im = Image.fromarray(rgbArray)
-    im.save("filename.jpeg")
-    im.show()
-
-
-def unpickle(file):
-    import pickle
-    with open(file, 'rb') as fo:
-       dict = pickle.load(fo, encoding='bytes')
-    return dict
+def displaySampleFromDataset(base_dir,numIMG):
+    datasetImages=os.path.join(base_dir,"datasetImages")
+    for labelIMG in os.listdir(datasetImages):
+        displayIMGbyClass(base_dir,numIMG,labelIMG)
 
 
 
 if __name__ == '__main__':
-   batch_file=r"C:\D\bootcamp\project\dataset\cifar-10-batches-py\data_batch_1"
-   dict=unpickle(batch_file)
-   display_image(dict[b'data'][4])
+    base_dir=r"D:\bootcamp\AMAT\project\dataset"
+    displaySampleFromDataset(base_dir, 8)
 
-   #im = Image.open(r"C:\Users\1\Downloads\86289.jpg")
-   #im.show()
