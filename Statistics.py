@@ -3,28 +3,38 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib import pyplot
+import seaborn
 
-file=r"C:\Users\אפרת\Downloads\df.csv"
+
+
+
+file=r"C:\הנדסאים שנה ב\בוטקאמפ\פרוייקט\projectCode\df.csv"
 df =pd.read_csv(file)
 
 def dataSize():
     print(len(df))
 
 def distPerClass():
-    sns.countplot(x='label_name', data=df)
+
+    sns.countplot(x='label_name',data=df).set(title="classes of all data distribution")
+    plt.xticks(rotation=45, ha='right')
     # sns.distplot(trainDF['label_name'])
+    plt.tight_layout()
     plt.show()
 
 def typeDistPerClass(type):
     typeDF=df[df['train/validation/test']==type]
     if(len(typeDF)>0):
-        sns.countplot(x='label_name', data=typeDF)
+        sns.countplot(x='label_name', data=typeDF).set(title=type)
+        plt.xticks(rotation=45, ha='right')
+        plt.tight_layout()
         plt.show()
     else:
         print(type +' is empty')
 
 def countplot_distribution_of_train_validation_test():
-    sns.countplot(x=df['train/validation/test'],data=df)
+    sns.countplot(x=df['train/validation/test'],data=df).set(title="train validation test distribution")
     plt.show()
 
 def pie_distribution_of_train_validation_test(types,data):
