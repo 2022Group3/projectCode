@@ -73,4 +73,4 @@ if __name__ == '__main__':
     extract_cifar100_batch('cifar-100-python', 'train',categories100)
 
     for i in range(1,6):
-        extract_cifar10_batch('cifar-10-batches-py', 'data_batch_'+str(i),categories10)
+        extract_cifar10_batch('cifar-10-batches-py', f'data_batch_{i}',categories10)
