@@ -38,7 +38,7 @@ def extract_cifar10_batch(base_dir,dataset,batch,categories):
         if not os.path.exists(out_dir):
             os.makedirs(out_dir)
         save_cifar_image(images[i], os.path.join(out_dir, image_name[i].decode('utf-8')))
-
+#
 def load_cifar100_pickle(path, file):
     f = open(os.path.join(path, file), 'rb')
     dict = pickle.load(f,encoding='bytes')
