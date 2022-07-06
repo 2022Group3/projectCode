@@ -1,29 +1,40 @@
+
+import params
 import os
 from random import sample
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-def displayIMGbyClass(base_dir,numIMG,className):
-    fig = plt.figure(figsize=(32,32))
-    pathToLabel=os.path.join(base_dir,"datasetImages")
-    pathToLabel=os.path.join(pathToLabel,className)
+
+#func that add to figure img by specific class
+def createPlotOnFigByClass(numIMG,className,fig,indexFig,heightFig):
+    pathToLabel=os.path.join(params.base_dir,"datasetImages",className)
     images=os.listdir(pathToLabel)
     images=sample(images,numIMG)
     for i in range(len(images)):
         pathToIMG = os.path.join(pathToLabel,images[i])
-        ax = fig.add_subplot(1,numIMG, i+1)
+        ax = fig.add_subplot(heightFig,numIMG, indexFig+i)
         img = mpimg.imread(pathToIMG)
-        imgplot = plt.imshow(img)
-        ax.set_title(images[i])
+        plt.imshow(img)
+        plt.axis('off')
+        #ax.set_title(className,fontsize=5)
 
+def displayIMGbyClass(numIMG,className):
+    fig = plt.figure(figsize=(10, 10))
+    createPlotOnFigByClass(numIMG, className, fig, 1,1)
+    plt.show()
 
-def displaySampleFromDataset(base_dir,numIMG):
-    datasetImages=os.path.join(base_dir,"datasetImages")
-    for labelIMG in os.listdir(datasetImages):
-        displayIMGbyClass(base_dir,numIMG,labelIMG)
-
+def displaySampleFromDataset(numIMG):
+    indexFig=1
+    fig = plt.figure(figsize=(10, 10))
+    datasetImages=os.path.join(params.base_dir,"datasetImages")
+    for label in os.listdir(datasetImages):
+        createPlotOnFigByClass(numIMG, label, fig, indexFig, 10+len(params.chosen_label))
+        indexFig+=numIMG
+    plt.show()
 
 
 if __name__ == '__main__':
-    base_dir=r"D:\bootcamp\AMAT\project\dataset"
-    displaySampleFromDataset(base_dir, 8)
-
+    #displaySampleFromDataset(base_dir, 8)
+    displayIMGbyClass(3, "dog")
+    #displayIMGbyClass(5, "dog")
+    displaySampleFromDataset(15)
