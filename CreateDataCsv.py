@@ -15,11 +15,11 @@ def unpickle(file):
 
 
 # write to csv
-def data_to_csv(dataFrame,csv_path):
-    if(exists(csv_path)):
-        dataFrame.to_csv(csv_path, mode='a', index=False, header=False)
+def data_to_csv(dataFrame):
+    if(exists(params.csv_path)):
+        dataFrame.to_csv(params.csv_path, mode='a', index=False, header=False)
     else:
-        dataFrame.to_csv(csv_path, mode='a', index=False, header=cols)
+        dataFrame.to_csv(params.csv_path, mode='a', index=False, header=cols)
 
 
 # create dataFrame from cfar100
