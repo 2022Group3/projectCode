@@ -7,7 +7,6 @@ import params
 from matplotlib import pyplot
 import seaborn
 
-
 df = pd.read_csv(params.csv_path)
 
 
