@@ -11,6 +11,7 @@ import numpy as np
 def saveTheIMG(path,img):
     cv2.imwrite(path, img)
 
+
 #change the img to 32X32 format
 def changeIMGSize(img):
     resized = cv2.resize(img, (32,32), interpolation = cv2.INTER_LANCZOS4)
