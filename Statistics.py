@@ -1,4 +1,4 @@
-#This file will show different statistics on our csv
+# This file shows different statistics on our csv
 import numpy as np
 import pandas as pd
 import seaborn as sns
