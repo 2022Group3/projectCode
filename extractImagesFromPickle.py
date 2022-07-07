@@ -4,6 +4,8 @@ import pickle
 import cv2
 import os
 import params
+
+
 def load_cifar10_pickle(path, file):
     f = open(os.path.join(path, file), 'rb')
     dict = pickle.load(f,encoding='bytes')
