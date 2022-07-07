@@ -33,6 +33,7 @@ def typeDistPerClass(type):
     else:
         print(type +' is empty')
 
+
 def countplot_distribution_of_train_validation_test():
     sns.countplot(x=df['train/validation/test'],data=df).set(title="train validation test distribution")
     plt.show()
