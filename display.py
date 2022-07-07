@@ -21,7 +21,7 @@ def createPlotOnFigByClass(numIMG,className,fig,indexFig,heightFig):
     ax = fig.add_subplot(heightFig, numIMG, indexFig)
     plt.axis('off')
     ax.text(0,0,className, style='italic',
-            fontsize=10, color="black")
+            fontsize=5, color="black")
     for i in range(1,len(images)):
         pathToIMG = os.path.join(pathToLabel,images[i-1])
         ax = fig.add_subplot(heightFig,numIMG, indexFig+i)
@@ -39,7 +39,7 @@ def displayIMGbyClass(numIMG,className):
 def displaySampleFromDataset(numIMG):
     indexFig=1
     numIMG+=1
-    fig = plt.figure(figsize=(10, 10))
+    fig = plt.figure(figsize=(10,10))
     fig.suptitle('display sample')
     datasetImages=os.path.join(params.base_dir,"datasetImages")
     for label in os.listdir(datasetImages):
