@@ -1,8 +1,7 @@
-#split to train, validation and test
+#devide to train ,validation and test
 import pandas as pd
 import numpy as np
 import params
-
 
 def train_validate_test_split(csv_data, train_percent=0.6, validate_percent=0.1, seed=None):
     df = pd.read_csv(csv_data)
@@ -21,6 +20,7 @@ def train_validate_test_split(csv_data, train_percent=0.6, validate_percent=0.1,
     dataframe = train.append(validate).append(test)
     dataframe.to_csv(params.csv_path)
     return dataframe
+
 
 
 if __name__ == '__main__':
