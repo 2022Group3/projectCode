@@ -69,12 +69,13 @@ def cfar10_to_df():
         data_to_csv(df)
 
 
-def ourPicturesDf(path):
-    dict = unpickle(path)
-    df = pd.DataFrame({'image_name': dict[b'filenames'],
-                       'batch_label': "", 'label_number':dict[b'label_num'], 'label_name': dict[b'label_name'], 'dataset': 'our',
-                       'train/validation/test': "test"})
-    data_to_csv(df)
+# not relevant
+# def our_picturesDf(path):
+#     dict = unpickle(path)
+#     df = pd.DataFrame({'image_name': dict[b'filenames'],
+#                        'batch_label': "", 'label_number':dict[b'label_num'], 'label_name': dict[b'label_name'], 'dataset': 'our',
+#                        'train/validation/test': "test"})
+#     data_to_csv(df)
 
 
 if __name__ == '__main__':
