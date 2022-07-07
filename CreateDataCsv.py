@@ -59,7 +59,6 @@ def label_cifar10():
     return unpickle(f'{base_dir}\\cifar-10-batches-py\\batches.meta')[b'label_names']
 # create dataFrame from cifar10
 def cfar10_to_df():
-    # data_to_csv(None, cols)
     names = label_cifar10()
     batch_files = [fn for fn in os.listdir(f'{base_dir}\\cifar-10-batches-py')
                    if (fn.startswith("data") or fn.startswith("test"))]
