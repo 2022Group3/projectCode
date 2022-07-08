@@ -7,6 +7,9 @@ import CreateDataCsv
 import  pandas
 import CreateDataCsv
 import numpy as np
+from skimage import io
+
+
 
 def saveTheIMG(path,img):
     cv2.imwrite(path, img)
@@ -40,7 +43,9 @@ def save_our_img():
         print("imgName: "+images[i])
         imgPath=os.path.join(ourImages,images[i])
         print("imgPath: "+imgPath)
-        img = cv2.imread(imgPath)
+        #img = cv2.imread(imgPath)
+        #insted of the previos line' it's help me
+        img = io.imread(imgPath)
         rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # this converts it into RGB
         plt.imshow(rgb_img)
         plt.axis('off')
