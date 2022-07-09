@@ -1,16 +1,25 @@
 import os
+import cv2
 from random import sample
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from PIL import Image
 import params
-
+import CreateDataCsv
+import pandas as pd
 #display specific image
-# def display_image(image_name):
-#     # creating a object
-#     path=os.path.join((params.base_dir,'datasetImages'),)
-#     im = Image.open(params.base_dir.)
-#     im.show()
+
+def display_image_by_name(image_name):
+    df=CreateDataCsv.load_csv()
+    df=((df[df['image_name']==image_name]))
+    df.reset_index()
+    image_label=df.iloc[0]['label_name']
+    image_path=os.path.join(params.base_dir,'datasetImages',image_label,image_name)
+    img = cv2.imread(image_path)
+    plt.imshow(img)
+    plt.axis('off')
+    plt.show()
+
 
 
 #func that add to figure img by specific class
@@ -50,7 +59,8 @@ def displaySampleFromDataset(numIMG):
 
 
 if __name__ == '__main__':
+    display_image_by_name('bottle_s_001976.png')
     #displaySampleFromDataset(base_dir, 8)
-    displayIMGbyClass(3, "dog")
-    #displayIMGbyClass(5, "dog")
-    displaySampleFromDataset(15)
+    #displayIMGbyClass(3, "cat")
+    # #displayIMGbyClass(5, "dog")
+    # displaySampleFromDataset(15)
