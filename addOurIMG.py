@@ -45,14 +45,14 @@ def save_our_img():
         print("imgPath: "+imgPath)
         #img = cv2.imread(imgPath)
         #insted of the previos line' it's help me
-        img = io.imread(imgPath)
+        img = cv2.imread(imgPath)
         rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # this converts it into RGB
-        plt.imshow(rgb_img)
+        plt.imshow(img)
         plt.axis('off')
         plt.show()
         label=input("Enter class label: ")
         img=changeIMGSize(img)
-        path_to_img=os.path.join(params.base_dir,params.extract_img_folderName,label,images[i])
+        path_to_img=os.path.join(params.base_dir,params.extract_img_folderName,label,'a'+images[i])
 
         dict1['image_name'][i]=images[i]
         dict1['label_name'][i]=label
