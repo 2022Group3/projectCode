@@ -18,11 +18,10 @@ def train_validate_test_split(csv_data, train_percent=0.6, validate_percent=0.1,
     validate[params.csv_cols[6]] = 'validation'
     test[params.csv_cols[6]] = 'test'
     dataframe = train.append(validate).append(test)
-    dataframe.to_csv(params.csv_path)
+    dataframe.to_csv(params.CSV_path)
     return dataframe
 
 
 
 if __name__ == '__main__':
-    file = params.csv_path
-    print(train_validate_test_split(file))
+    print(train_validate_test_split(params.CSV_path))
