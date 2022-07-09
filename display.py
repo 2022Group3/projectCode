@@ -7,8 +7,8 @@ from PIL import Image
 import params
 import CreateDataCsv
 import pandas as pd
-#display specific image
 
+#display specific image
 def display_image_by_name(image_name):
     df=CreateDataCsv.load_csv()
     df=((df[df['image_name']==image_name]))

@@ -33,10 +33,12 @@ def cfar100_to_df():
     test_current_labels = [x+10 for x in test[b'coarse_labels']]
     chosen_label = params.chosen_label
     # train dataFrame
-    df_train = pd.DataFrame({cols[0]: train[b'filenames'], cols[1]: 'train', cols[2]: train[b'coarse_labels'],
+    listFileNames =[x.decode('utf-8') for x in train[b'filenames']]
+    df_train = pd.DataFrame({cols[0]: listFileNames, cols[1]: 'train', cols[2]: train[b'coarse_labels'],
                              cols[3]: train_current_labels, cols[4]: "", cols[5]: 'cfar100', cols[6]: ''})
     # test dataFrame
-    df_test = pd.DataFrame({cols[0]: test[b'filenames'], cols[1]: 'test', cols[2]: test[b'coarse_labels'],
+    listFileNames =[x.decode('utf-8') for x in test[b'filenames']]
+    df_test = pd.DataFrame({cols[0]: listFileNames, cols[1]: 'test', cols[2]: test[b'coarse_labels'],
                             cols[3]: test_current_labels, cols[4]: "", cols[5]: 'cfar100', cols[6]: ''})
     # filter class, append train+test
     chosen_label_df = df_train[df_train[cols[2]].isin(chosen_label)].append(df_test[df_test[cols[2]].isin(chosen_label)])
@@ -51,7 +53,8 @@ def cfar100_to_df():
 # create dataFrame from batch
 def batch_df(dict, batch_label, names):
     # create dataframe
-    df = pd.DataFrame({cols[0]: dict[b'filenames'], cols[1]: batch_label,
+    listFileNames =[x.decode('utf-8') for x in dict[b'filenames']]
+    df = pd.DataFrame({cols[0]: listFileNames, cols[1]: batch_label,
                        cols[2]: dict[b'labels'], cols[3]: dict[b'labels'], cols[4]: "", cols[5]: 'cifar10', cols[6]: ""})
     df['label_name'] = df.apply(lambda row: (names[row.original_label_number]).decode("utf-8"), axis=1)
     return df
@@ -68,14 +71,8 @@ def cfar10_to_df():
         df = batch_df(dict, i, names)
         data_to_csv(df)
 
-
-# def ourPicturesDf(path):
-#     dict = unpickle(path)
-#     df = pd.DataFrame({'image_name': dict[b'filenames'],
-#                        'batch_label': "", 'label_number':dict[b'label_num'], 'label_name': dict[b'label_name'], 'dataset': 'our',
-#                        'train/validation/test': "test"})
-#     data_to_csv(df)
-#
+def load_csv():
+    return pd.read_csv(params.CSV_path)
 
 if __name__ == '__main__':
      cfar10_to_df()
