@@ -45,7 +45,7 @@ def save_our_img():
         print("imgPath: "+imgPath)
         img = cv2.imread(imgPath)
         rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # this converts it into RGB
-        plt.imshow(img)
+        plt.imshow(rgb_img)
         plt.axis('off')
         plt.show()
         label=input("Enter class label: ")
