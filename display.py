@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from PIL import Image
 import params
-import CreateDataCsv
+import create_data_csv
 import pandas as pd
 
 #display specific image
 def display_image_by_name(image_name):
-    df=CreateDataCsv.load_csv()
+    df=create_data_csv.load_csv()
     df=((df[df['image_name']==image_name]))
     df.reset_index()
     image_label=df.iloc[0]['label_name']
@@ -48,7 +48,7 @@ def display_ing_by_class(className,numIMG=5):
     create_plot_on_fig_by_class(numIMG, className, fig, 1,1)
     plt.show()
 
-def display_sampleFrom_dataset(numIMG=10):
+def display_sample_from_dataset(numIMG=10):
     indexFig=1
     numIMG+=1
     fig = plt.figure(figsize=(10,10))
@@ -65,5 +65,5 @@ def display_sampleFrom_dataset(numIMG=10):
 #     # display_image_by_name('airbus_s_000117.png')
 #     #displaySampleFromDataset(base_dir, 8)
 #     #displayIMGbyClass(3, "cat")
-#     displayIMGbyClass( "dog",5)
-#     displaySampleFromDataset(15)
+#     display_ing_by_class( "dog",5)
+#     display_sample_from_dataset(15)
