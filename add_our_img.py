@@ -1,11 +1,12 @@
-import cv2
-import pandas as pd
 from matplotlib import image as mpimg, pyplot as plt
 import os
+import cv2
+import pandas as pd
 import params
 import create_data_csv
 import  pandas
 import create_data_csv
+from typing import Dict
 import numpy as np
 from skimage import io
 
@@ -21,15 +22,20 @@ def change_img_size(img):
 
 
 def add_imgs_to_csv(dict1):
+    print(dict1)
     df = pd.DataFrame(dict1)
-    df[params.csv_cols[5]] = "our"
-    df[params.csv_cols[6]] = "test"
+    unique_df = create_data_csv.load_csv().drop_duplicates(params.csv_cols[4])
 
-    orginal_df = create_data_csv.load_csv()
-    unique_df = orginal_df.drop_duplicates(params.csv_cols[4])
+    # def a(row):
+    #     lname = row['label_name']
+    #     unique_row = unique_df[unique_df['label_name'] == lname]
+    #     return unique_row[params.csv_cols[2]]
+    #
+    #
+    # df[params.csv_cols[2]] = df.apply(a, axis=1)
 
-    df[params.csv_cols[2]] = df.apply(lambda row: ((unique_df[unique_df['label_name'] == row.label_name])[params.csv_cols[2]]), axis=1)
-    df[params.csv_cols[3]] = df.apply(lambda row: ((unique_df[unique_df['label_name'] == row.label_name])[params.csv_cols[3]]), axis=1)
+    df[params.csv_cols[2]] = df['label_name'].apply(lambda row: ((unique_df[unique_df['label_name'] == row])[params.csv_cols[2]]))
+    df[params.csv_cols[3]] = df['label_name'].apply(lambda row: ((unique_df[unique_df['label_name'] == row])[params.csv_cols[3]]))
 
     # labelscifar10 = create_data_csv.label_cifar10()
     # labelscifar100 = create_data_csv.label_cifar100()
@@ -51,6 +57,7 @@ def save_our_img():
     for col in params.csv_cols:
         dict1[col] = [None]*len(images)
     for i in range(len(images)):
+
         print("imgName: "+images[i])
         img_path = os.path.join(our_images, images[i])
         print("imgPath: "+img_path)
@@ -63,11 +70,14 @@ def save_our_img():
         img = change_img_size(img)
         path_to_img = os.path.join(params.base_dir, params.extract_img_folderName, label, images[i])
 
+# add info to dict
         dict1[params.csv_cols[0]][i] = images[i]
+        dict1[params.csv_cols[1]][i] = "our_batch"
         dict1[params.csv_cols[4]][i] = label
+        dict1[params.csv_cols[5]][i] = "our_dataset"
+        dict1[params.csv_cols[6]][i] = "test"
+
+
+
         save_the_img(path_to_img, img)
     add_imgs_to_csv(dict1)
-
-
-# if __name__ == '__main__':
-
