@@ -4,5 +4,5 @@ base_dir = r"C:\bootcamp\project\dataset"
 chosen_label = [1, 2, 3, 4, 5]
 our_img_folderName="our_images_orginal"
 extract_img_folderName="datasetImages"
-CSV_path=r"C:\bootcamp\project\data.csv"
+csv_path=r"C:\bootcamp\project\data.csv"
 

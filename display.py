@@ -42,7 +42,7 @@ def create_plot_on_fig_by_class(numIMG,className,fig,indexFig,heightFig,from_all
         plt.axis('off')
         #ax.set_title(className,fontsize=5)
 
-def display_ing_by_class(className,numIMG=5):
+def display_img_by_class(className,numIMG=5):
     fig = plt.figure(figsize=(10, 10))
     fig.suptitle("display "+className)
     create_plot_on_fig_by_class(numIMG, className, fig, 1,1)
