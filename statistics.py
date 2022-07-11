@@ -82,7 +82,7 @@ def distribution_of_train_validation_test(distribution=True, pie=False):
         pie_distribution_of_train_validation_test(types, types_size)
 
 
-if __name__ == '__main__':
+def show_all_statistics():
     dist_per_class()
     type_dist_per_class('train')
     type_dist_per_class('validation')
