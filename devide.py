@@ -3,14 +3,14 @@ import pandas as pd
 import numpy as np
 import params
 
-def train_validate_test_split(csv_data, train_percent=0.6, validate_percent=0.1, seed=None):
+
+def train_validate_test_split(csv_data=params.csv_path, train_percent=0.6, validate_percent=0.1, seed=None):
     df = pd.read_csv(csv_data)
-    # df.drop('train/validation/test', inplace=True, axis=1)
     np.random.seed(seed)
     perm = np.random.permutation(df.index)
-    m = len(df.index)
-    train_end = int(train_percent * m)
-    validate_end = int(validate_percent * m) + train_end
+    df_len = len(df.index)
+    train_end = int(train_percent * df_len)
+    validate_end = int(validate_percent * df_len) + train_end
     train = df.iloc[perm[:train_end]]
     validate = df.iloc[perm[train_end:validate_end]]
     test = df.iloc[perm[validate_end:]]
@@ -18,10 +18,10 @@ def train_validate_test_split(csv_data, train_percent=0.6, validate_percent=0.1,
     validate[params.csv_cols[6]] = 'validation'
     test[params.csv_cols[6]] = 'test'
     dataframe = train.append(validate).append(test)
-    dataframe.to_csv(params.CSV_path)
+    dataframe = dataframe.reset_index(drop=True)
+    dataframe.to_csv(csv_data)
     return dataframe
 
 
-
-if __name__ == '__main__':
-    print(train_validate_test_split(params.CSV_path))
+# if __name__ == '__main__':
+#     print(train_validate_test_split())
