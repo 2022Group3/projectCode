@@ -12,7 +12,7 @@ import extract_images_from_pickle as extract
 
 
 def saveTheIMG(path,img):
-    cv2.imwrite(path, img)
+    cv2.imwrite(path[:-3]+"png", img)
 
 #change the img to 32X32 format
 def changeIMGSize(img):
@@ -20,7 +20,6 @@ def changeIMGSize(img):
     return resized
 
 def save_our_img():
-    #df=pd.DataFrame(columns=params.csv_cols)
     ourImages=os.path.join(params.base_dir,params.our_img_folderName)
     images=os.listdir(ourImages)
     df=pd.DataFrame(columns=params.csv_cols)
@@ -37,13 +36,14 @@ def save_our_img():
         plt.show()
         label=input("Enter class label: ")
         img=changeIMGSize(img)
-        path_to_img=os.path.join(params.base_dir,params.extract_img_folderName,label,'a'+images[i])
+        path_to_img=os.path.join(params.base_dir,params.extract_img_folderName,label,images[i])
+        saveTheIMG(path_to_img, img)
         df.loc[i][params.csv_cols[0]] = images[i]
         df.loc[i][params.csv_cols[1]] = "our_batch"
         df.loc[i][params.csv_cols[4]] = label
         df.loc[i][params.csv_cols[5]] = "our_dataset"
         df.loc[i][params.csv_cols[6]] = "test"
-        saveTheIMG(path_to_img,img)
+
     labelscifar10 = extract.label_cifar10()
     labelscifar10 = [x.decode('utf-8') for x in labelscifar10]
     labelscifar100 = extract.label_cifar100()
