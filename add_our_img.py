@@ -19,8 +19,6 @@ def changeIMGSize(img):
     resized = cv2.resize(img, (32,32), interpolation = cv2.INTER_LANCZOS4)
     return resized
 
-
-
 def save_our_img():
     #df=pd.DataFrame(columns=params.csv_cols)
     ourImages=os.path.join(params.base_dir,params.our_img_folderName)
@@ -56,5 +54,4 @@ def save_our_img():
     df['current_label_number'] = df['label_name'].apply(
         lambda label_name: labelscifar10.index(label_name) if label_name in labelscifar10 else labelscifar100.index(
             label_name) + 10)
-
     create_data_csv.data_to_csv(df)
