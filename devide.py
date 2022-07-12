@@ -19,7 +19,7 @@ def train_validate_test_split(csv_data=params.csv_path, train_percent=0.6, valid
     test[params.csv_cols[6]] = 'test'
     dataframe = train.append(validate).append(test)
     dataframe = dataframe.reset_index(drop=True)
-    dataframe.to_csv(csv_data)
+    dataframe.to_csv(csv_data,index=False)
     return dataframe
 
 
