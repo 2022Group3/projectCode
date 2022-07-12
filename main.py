@@ -1,10 +1,10 @@
-import extract_images_from_pickle as extract
+# import extract_images_from_pickle as extract
 import params
 import add_our_img
 import create_data_csv
-import devide
-import statistics
-import display
+# import devide
+# import statistics
+# import display
 
 
 if __name__ == '__main__':
@@ -12,10 +12,9 @@ if __name__ == '__main__':
     # create_data_csv.cifar10_to_df()
     # create_data_csv.cifar100_to_df()
     # devide.train_validate_test_split()
-    # add_our_img.save_our_img()
-    display.display_img_by_class("dog")
-    display.display_sample_from_dataset()
-    statistics.show_all_statistics()
-
+    add_our_img.save_our_img()
+    # display.displayIMGbyClass("dog")
+    # display.displaySampleFromDataset()
+    #
 
 

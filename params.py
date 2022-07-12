@@ -1,8 +1,7 @@
 
 csv_cols = ['image_name', 'batch_label', 'original_label_number', 'current_label_number', 'label_name', 'dataset', 'train/validation/test']
-base_dir = r"C:\bootcamp\project\dataset"
+base_dir = r"C:\bootcampProject\dataset"
 chosen_label = [1, 2, 3, 4, 5]
-our_img_folderName="our_images_orginal"
-extract_img_folderName="datasetImages"
-csv_path=r"C:\bootcamp\project\data.csv"
-
+our_img_folderName = "our_images_orginal"
+extract_img_folderName = "datasetImages"
+csv_path = r"C:\bootcampProject\projectCode\data.csv"
