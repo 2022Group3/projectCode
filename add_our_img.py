@@ -23,7 +23,7 @@ def save_our_img():
     ourImages = os.path.join(params.base_dir, params.our_img_folderName)
     images = os.listdir(ourImages)
     df = pd.DataFrame(columns=params.csv_cols)
-    df[params.csv_cols[0]]= images
+    df[params.csv_cols[0]] = images
     for i in range(len(images)):
         print("imgName: "+images[i])
         imgPath = os.path.join(ourImages, images[i])
@@ -35,8 +35,9 @@ def save_our_img():
         plt.show()
         label = input("Enter class label: ")
         img = change_img_size(img)
+        path_to_img = os.path.join(params.base_dir, params.extract_img_folderName, label, images[i])
         save_the_img(path_to_img, img)
-        df.loc[i][params.csv_cols[0]] = images[i]
+        df.loc[i][params.csv_cols[0]] = images[i][:-3]+"png"
         df.loc[i][params.csv_cols[1]] = "our_batch"
         df.loc[i][params.csv_cols[4]] = label
         df.loc[i][params.csv_cols[5]] = "our_dataset"
