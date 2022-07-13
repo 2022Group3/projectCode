@@ -4,40 +4,38 @@ from matplotlib import image as mpimg, pyplot as plt
 import os
 import params
 import create_data_csv
-import  pandas
 import create_data_csv
-import numpy as np
 from skimage import io
 import extract_images_from_pickle as extract
 
 
-def saveTheIMG(path,img):
+def save_the_img(path, img):
     cv2.imwrite(path[:-3]+"png", img)
 
-#change the img to 32X32 format
-def changeIMGSize(img):
-    resized = cv2.resize(img, (32,32), interpolation = cv2.INTER_LANCZOS4)
+
+# change the img to 32X32 format
+def change_img_size(img):
+    resized = cv2.resize(img, (32, 32), interpolation=cv2.INTER_LANCZOS4)
     return resized
 
+
 def save_our_img():
-    ourImages=os.path.join(params.base_dir,params.our_img_folderName)
-    images=os.listdir(ourImages)
-    df=pd.DataFrame(columns=params.csv_cols)
-    df['image_name']=images
+    ourImages = os.path.join(params.base_dir, params.our_img_folderName)
+    images = os.listdir(ourImages)
+    df = pd.DataFrame(columns=params.csv_cols)
+    df[params.csv_cols[0]]= images
     for i in range(len(images)):
         print("imgName: "+images[i])
-        imgPath=os.path.join(ourImages,images[i])
+        imgPath = os.path.join(ourImages, images[i])
         print("imgPath: "+imgPath)
         img = cv2.imread(imgPath)
         rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # this converts it into RGB
-        plt.imshow(img)
         plt.imshow(rgb_img)
         plt.axis('off')
         plt.show()
-        label=input("Enter class label: ")
-        img=changeIMGSize(img)
-        path_to_img=os.path.join(params.base_dir,params.extract_img_folderName,label,images[i])
-        saveTheIMG(path_to_img, img)
+        label = input("Enter class label: ")
+        img = change_img_size(img)
+        save_the_img(path_to_img, img)
         df.loc[i][params.csv_cols[0]] = images[i]
         df.loc[i][params.csv_cols[1]] = "our_batch"
         df.loc[i][params.csv_cols[4]] = label

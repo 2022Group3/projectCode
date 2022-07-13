@@ -1,10 +1,10 @@
-# import extract_images_from_pickle as extract
+import extract_images_from_pickle as extract
 import params
 import add_our_img
 import create_data_csv
-# import devide
-# import statistics
-# import display
+import devide
+import statistics
+import display
 
 
 if __name__ == '__main__':

@@ -3,11 +3,16 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from os.path import exists
+
 import params
 from matplotlib import pyplot
 import seaborn
 
-df = pd.read_csv(params.csv_path)
+if exists(params.csv_path):
+    df = pd.read_csv(params.csv_path)
+else:
+    df = pd.DataFrame()
 
 
 def data_size():
