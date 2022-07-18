@@ -2,21 +2,10 @@ import numpy as np
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QFileDialog, QLabel
-from keras.utils.image_dataset import load_image
-from tensorflow.keras.preprocessing.image import load_img
-from tensorflow.keras.utils import img_to_array
-from keras.models import load_model
+
 import extract_images_from_pickle as extract
 import params
-
-model = load_model(params.model_path)
-
-labelscifar10 = extract.label_cifar10()
-labelscifar10 = [x.decode('utf-8') for x in labelscifar10]
-labelscifar100 = extract.label_cifar100()
-labelscifar100 = [x.decode('utf-8') for x in labelscifar100]
-labelscifar100_chosen=[labelscifar100[x] for x in params.chosen_label]
-labels=labelscifar10+[None]+labelscifar100_chosen
+import model_predict
 
 
 class Ui_MainWindow(object):
@@ -60,27 +49,15 @@ class Ui_MainWindow(object):
     def show_browse(self):
         path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.png)')[0]
         self.photo.setPixmap(QtGui.QPixmap(path))
-        img=self.load_image(path)
-        self.predict_image(img)
-    def predict_image(self,img):
-        predict_x = model.predict(img)
-        classes_x = np.argmax(predict_x, axis=1)
-        self.label.setText("predict: " + labels[classes_x[0]])
+        img=model_predict.load_image(path)
+        predict=model_predict.predict_image(img)
+        self.label.setText("predict: " + predict)
 
 
-    def load_image(self,filename):
-        print("load_image")
-        img = load_img(filename, target_size=(32, 32))
-        img = img_to_array(img)
-        img = img.reshape(1, 32, 32, 3)
-        img = img.astype('float32')
-        img = img / 255.0
-        return img
+
 
 
 if __name__ == "__main__":
-    print(labels)
-    #model = load_model(r"D:\bootcamp\AMAT\project\keras_cifar10_trained_model_1A.h5")
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
