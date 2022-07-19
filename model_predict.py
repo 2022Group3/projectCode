@@ -28,6 +28,7 @@ def load_image(filename):
 def predict_image(img):
     print("predict_image")
     predict_x = model.predict(img,verbose=0)
+    print(predict_x)
     classes_x1 = np.argmax(predict_x, axis=1)
     first_prob=(predict_x[0])[classes_x1][0]*100
     predict_x[0][classes_x1]=0.0

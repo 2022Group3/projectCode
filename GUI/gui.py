@@ -25,12 +25,12 @@ class Ui_MainWindow(object):
         self.predict.setGeometry(QtCore.QRect(50, 580, 400, 45))
         self.predict.setAlignment(QtCore.Qt.AlignCenter)
         self.predict.setText("prediction")
-        self.predict.setStyleSheet("background-color: rgb(180,250, 250);border: 1px solid black;")
+        self.predict.setStyleSheet("background-color: rgb(230,250, 250);border: 1px solid black;")
         self.predict_data = QtWidgets.QLabel(self.centralwidget)
         self.predict_data.setGeometry(QtCore.QRect(50, 630, 400, 45))
         self.predict_data.setAlignment(QtCore.Qt.AlignCenter)
         self.predict_data.setText("predict_data")
-        self.predict_data.setStyleSheet("background-color: rgb(180,250, 250);border: 1px solid black;")
+        self.predict_data.setStyleSheet("background-color: rgb(230,250, 250);border: 1px solid black;")
         myFont = QtGui.QFont()
         myFont.setBold(True)
         self.predict.setFont(myFont)
@@ -81,7 +81,7 @@ class Ui_MainWindow(object):
     def show_predict_on_labels(self,img):
         pred1, prob1, pred2, prob2 = model_predict.predict_image(img)
         print(type(prob1))
-        self.predict_data.setText(f"first place:  {pred1}   {str(round(prob1, 2))}%\n  second place: {pred2} {str(round(prob2, 2))} %")
+        self.predict_data.setText(f"first place: {pred1} {str(round(prob1, 2))}%\nsecond place: {pred2} {str(round(prob2, 2))}%")
         self.predict.setText("classified as " + pred1)
 if __name__ == "__main__":
     import sys
