@@ -3,7 +3,7 @@ import cv2
 from random import sample
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-from PIL import Image
+# from PIL import Image
 import params
 import create_data_csv
 import pandas as pd
