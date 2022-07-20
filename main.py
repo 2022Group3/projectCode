@@ -15,6 +15,5 @@ if __name__ == '__main__':
     add_our_img.save_our_img()
     # display.displayIMGbyClass("dog")
     # display.displaySampleFromDataset()
-    #
 
 

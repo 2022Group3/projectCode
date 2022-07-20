@@ -2,11 +2,13 @@ import numpy as np
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QFileDialog, QLabel
+import sys
 
 import extract_images_from_pickle as extract
 import params
 import model_predict
 import take_picture
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -84,7 +86,6 @@ class Ui_MainWindow(object):
         self.predict_data.setText(f"first place: {pred1} {str(round(prob1, 2))}%\nsecond place: {pred2} {str(round(prob2, 2))}%")
         self.predict.setText("classified as " + pred1)
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
