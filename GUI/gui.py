@@ -33,7 +33,7 @@ class add_image(QWidget):
         self.browse.setGeometry(QtCore.QRect(50, 75, 400, 45))
         self.browse.setStyleSheet("background-color: rgb(190,250, 250);")
         self.browse.setFont(QtGui.QFont(font))
-
+#
         self.photo = QtWidgets.QLabel(self)
         self.photo.setGeometry(QtCore.QRect(50, 150, 400, 400))
         self.photo.setText("")
