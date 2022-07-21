@@ -28,11 +28,11 @@ def cifar100_to_df():
     # train dataFrame
     list_file_names = [x.decode('utf-8') for x in train[b'filenames']]
     df_train = pd.DataFrame({cols[0]: list_file_names, cols[1]: 'train', cols[2]: train[b'coarse_labels'],
-                             cols[3]: train_current_labels, cols[4]: "", cols[5]: 'cfar100', cols[6]: ''})
+                             cols[3]: train_current_labels, cols[4]: "", cols[5]: 'cifar100', cols[6]: ''})
     # test dataFrame
     list_file_names = [x.decode('utf-8') for x in test[b'filenames']]
     df_test = pd.DataFrame({cols[0]: list_file_names, cols[1]: 'test', cols[2]: test[b'coarse_labels'],
-                            cols[3]: test_current_labels, cols[4]: "", cols[5]: 'cfar100', cols[6]: ''})
+                            cols[3]: test_current_labels, cols[4]: "", cols[5]: 'cifar100', cols[6]: ''})
     # filter class, append train+test
     chosen_label_df = df_train[df_train[cols[2]].isin(chosen_label)].append(df_test[df_test[cols[2]].isin(chosen_label)])
     chosen_label_df['label_name'] = chosen_label_df.apply(lambda row: (names[row.original_label_number]).decode("utf-8"), axis=1)
