@@ -5,5 +5,6 @@ chosen_label = [1, 2, 4, 14,17]
 our_img_folderName="our_images_orginal"
 extract_img_folderName="datasetImages"
 csv_path=r"C:\D\bootcamp\project\dataset\data.csv"
-model_path=r"C:\D\bootcamp\project\projectCode\keras_cifar10_trained_model_1A.h5"
+model_path=r"C:\D\bootcamp\project\projectCode\final_model.h5"
+old_model_path=r"C:\D\bootcamp\project\projectCode\keras_cifar10_trained_model_1A.h5"
 data_modified=r"C:\D\bootcamp\project\projectCode\data_modified.npz"
