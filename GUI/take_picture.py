@@ -1,5 +1,4 @@
 import cv2
-#
 
 def capture():
 
@@ -10,12 +9,11 @@ def capture():
     result, image = cam.read()
 
     if result:
-        path_img=r"D:\bootcamp\AMAT\project\cam.png"
+        path_img=r"cam.png"
+        print(image.shape)
+        image = image[0:480, 80:560]#capture a square image
+
         cv2.imwrite(path_img, image)
         return path_img
-
     else:
         return None
-#
-# if __name__ == '__main__':
-#     print(capture())

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 # from PIL import Image
 import params
-import create_data_csv
+from DATA import create_data_csv
 import pandas as pd
 
 #display specific image

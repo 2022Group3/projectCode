@@ -4,14 +4,21 @@ import pickle
 import cv2
 import os
 import params
-import create_data_csv
+from DATA import create_data_csv
 
 
 def unpickle(file):
     with open(file, 'rb') as fo:
         d = pickle.load(fo, encoding='bytes')
     return d
-
+def get_labels_name():
+    labelscifar10 = label_cifar10()
+    labelscifar10 = [x.decode('utf-8') for x in labelscifar10]
+    labelscifar100 = label_cifar100()
+    labelscifar100 = [x.decode('utf-8') for x in labelscifar100]
+    labelscifar100_chosen = [labelscifar100[x] for x in params.chosen_label]
+    labels = labelscifar10 + labelscifar100_chosen
+    return labels
 
 def load_cifar10_pickle(path, file):
     dict = unpickle(os.path.join(path, file))

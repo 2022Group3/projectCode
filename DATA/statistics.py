@@ -1,13 +1,10 @@
-# This file shows different statistics on our data.csv
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from os.path import exists
-
 import params
-from matplotlib import pyplot
-import seaborn
 
 if exists(params.csv_path):
     df = pd.read_csv(params.csv_path)

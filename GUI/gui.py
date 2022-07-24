@@ -1,7 +1,8 @@
+import cv2
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QSize
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QFileDialog, QMainWindow, QLabel, QComboBox, QMessageBox
+from PyQt5.QtCore import QSize, QRect
+from PyQt5.QtGui import QPixmap, QMouseEvent
+from PyQt5.QtWidgets import QFileDialog, QMainWindow, QLabel, QComboBox, QMessageBox, QRubberBand
 
 from DATA import extract_images_from_pickle as extract, add_our_img
 from MODEL import model_predict
@@ -13,6 +14,33 @@ font = QtGui.QFont()
 font.setFamily("Microsoft YaHei UI")
 font.setPointSize(10)
 font.setWeight(60)
+font.setBold(False)
+
+class image(QLabel):
+    def __init__(self, parent=None):
+        super(image, self).__init__(parent)
+
+    def mousePressEvent(self, mouse_event: QMouseEvent):
+        print("mousePressEvent")
+        self.origin_point = mouse_event.pos()
+        self.current_rubber_band = QRubberBand(QRubberBand.Rectangle, self)
+        self.current_rubber_band.setGeometry(QRect(self.origin_point, QSize()))
+        self.current_rubber_band.show()
+
+    def mouseMoveEvent(self, mouse_event: QMouseEvent):
+        print("mouseMoveEvent")
+        self.current_rubber_band.setGeometry(QRect(self.origin_point, mouse_event.pos()).normalized())
+
+    def mouseReleaseEvent(self, mouse_event: QMouseEvent):
+        print("mouseReleaseEvent")
+        self.current_rubber_band.hide()
+        current_rect: QRect = self.current_rubber_band.geometry()
+        self.current_rubber_band.deleteLater()
+        print(current_rect)
+        crop_pixmap: QPixmap = self.pixmap().copy(current_rect)
+        crop_pixmap.save('crop.png')
+        print("a")
+        window.predict_image.show_image("crop.png")
 
 class add_image(QWidget):
     def __init__(self, parent=None):
@@ -58,23 +86,39 @@ class add_image(QWidget):
         self.save.setStyleSheet("background-color: rgb(190,250, 250);")
 
         self.save.setFont(QtGui.QFont(font))
-
-        # self.acc_our=QLabel(self)
-        # self.acc_our.setGeometry(QtCore.QRect(50, 630, 450, 30))
-        # self.acc_our.setText("accuracy of our images: ")
-        # self.acc_our.setStyleSheet("background-color: rgb(230,250, 250);border: 1px solid black;")
-        # self.acc_our.setAlignment(QtCore.Qt.AlignCenter)
-
         self.image_path=""
         self.image_name=""
-        #self.combo_box.activated[str].connect(self.combo_changed)
     def show_browse(self):
         path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.*)')[0]
         if not path:
             return
-        self.photo.setPixmap(QtGui.QPixmap(path))
+        self.show_image(path)
         self.image_name = path[path.rfind("/")+1:]
-        self.image_path=path
+
+
+    def show_image(self,img_path):
+        print("img_path")
+        self.convert_image_to_square(img_path)
+        self.photo.setPixmap(QtGui.QPixmap(r"seq.png"))
+
+
+    def convert_image_to_square(self,image_path):
+        print("convert_image_to_square")
+        image=cv2.imread(image_path)
+        h = image.shape[0]
+        w = image.shape[1]
+        print(image.shape)
+        if h < w:
+            s_w = (w - h) // 2
+            e_w = (w - h) // 2 + h
+            image = image[0:h, s_w:e_w]
+        else:
+            s_h = (h - w) / 2
+            e_h = (h - w) / 2 + w
+            #image = image[s_h, e_h, 0:w]
+        print(image.shape)
+        cv2.imwrite(r"seq.png",image)
+        self.image_path=r"seq.png"
 
     def save_image(self):
         label=self.combo_box.currentText()
@@ -107,14 +151,13 @@ class predict_image(QWidget):
 
         self.take_picture = QPushButton("take-picture",self)
         self.take_picture.setGeometry(QtCore.QRect(260, 75, 190, 45))
-        self.take_picture.setStyleSheet("background-color: rgb(180,250, 250);")
+        self.take_picture.setStyleSheet("background-color: rgb(190,250, 250);")
         self.take_picture.clicked.connect(self.show_take_picture)
         self.take_picture.setFont(QtGui.QFont(font))
-        self.photo = QtWidgets.QLabel(self)
+        self.photo = image(self)#QtWidgets.QLabel(self)
         self.photo.setGeometry(QtCore.QRect(50, 150, 400, 400))
         self.photo.setText("")
         self.photo.setPixmap(QtGui.QPixmap())
-        #self.photo.setScaledContents(False)
         self.photo.setScaledContents(True)
         self.photo.setObjectName("photo")
         self.photo.setStyleSheet("background-color: rgb(250,250, 250);border: 1px solid black;")
@@ -127,30 +170,56 @@ class predict_image(QWidget):
         self.predict.setFont(QtGui.QFont(font))
 
         self.predict_data = QLabel(self)
-        self.predict_data.setGeometry(QtCore.QRect(50, 630, 400, 45))
+        self.predict_data.setGeometry(QtCore.QRect(50, 640, 400, 50))
         self.predict_data.setText("predict_data")
         self.predict_data.setStyleSheet("background-color: rgb(230,250, 250);border: 1px solid black;")
         self.predict_data.setAlignment(QtCore.Qt.AlignCenter)
         self.predict_data.setFont(QtGui.QFont(font))
 
     def show_browse(self):
-        path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.*)')[0]
-        if not path:
-            return
-        self.photo.setPixmap(QtGui.QPixmap(path))
-        img= model_predict.load_image(path)
+        print("show_browse")
+        path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.png)')[0]
+        if path:
+            self.show_image(path)
+
+    def show_image(self,img_path):
+        print("show_image")
+        self.convert_image_to_square(img_path)
+        self.photo.setPixmap(QtGui.QPixmap(r"seq.png"))
+        img = model_predict.load_image(r"seq.png")
         self.show_predict_on_labels(img)
+
+
+    def convert_image_to_square(self,image_path):
+        print("convert_image_to_square")
+        print(image_path)
+        image=cv2.imread(image_path)
+        print(image)
+        h = image.shape[0]
+        w = image.shape[1]
+        border_top=0
+        border_bottom=0
+        border_right=0
+        border_left=0
+        print(image.shape)
+        if h < w:
+            border_top=(w-h)//2
+            border_bottom=border_top
+        else:
+            border_left=(h-w)//2
+            border_right=border_left
+        image=cv2.copyMakeBorder(image, border_top, border_bottom, border_left, border_right, cv2.BORDER_CONSTANT, None, value=(240, 240, 240))
+        image=cv2.resize(image, (400,400), interpolation = cv2.INTER_AREA)
+        cv2.imwrite(r"seq.png", image)
 
     def show_take_picture(self):
         path= take_picture.capture()
-        if not path:
-            return
-        self.photo.setPixmap(QtGui.QPixmap(path))
-        img = model_predict.load_image(path)
-        self.show_predict_on_labels(img)
+        if path:
+                self.show_image(path)
+
     def show_predict_on_labels(self,img):
+        print("show_predict_on_labels")
         pred1, prob1, pred2, prob2 = model_predict.predict_image(img)
-        print(type(prob1))
         self.predict_data.setText(f"first place: {pred1} {str(round(prob1, 2))}%\nsecond place: {pred2} {str(round(prob2, 2))}%")
         self.predict.setText("classified as " + pred1)
 
@@ -179,7 +248,6 @@ class MainWindow(QMainWindow):
 
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    sys.exit(app.exec_())
+app = QApplication(sys.argv)
+window = MainWindow()
+sys.exit(app.exec_())

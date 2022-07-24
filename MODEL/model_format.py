@@ -1,6 +1,6 @@
 # load train and test dataset
 import params
-import create_data_csv
+from DATA import create_data_csv
 import os
 import cv2
 import numpy as np
@@ -18,7 +18,7 @@ def imgs_and_labels_from_df(df):
     return images, labels
 
 
-def writre_data_to_npz_file():
+def write_data_to_npz_file():
     # load csv
     df = create_data_csv.load_csv()
     train_df = df[df[params.csv_cols[6]] == 'train']
@@ -39,12 +39,11 @@ def writre_data_to_npz_file():
     # trainY = to_categorical(trainY)
     # testY = to_categorical(testY)
     np.savez('data_modified.npz', train=trainX, ytrain=trainy, validation=validationX, yvalidation=validationy,
-             test=testX, ytest=testy,
-             cifar_test=cifar_testX, cifar_ytest=cifar_testy, our_test=our_testX, our_ytest=our_testy)
-    return trainX, trainy, validationX, validationy, cifar_testX, cifar_testy, our_testX, our_testy
+             test=testX, ytest=testy)#,
+             #cifar_test=cifar_testX, cifar_ytest=cifar_testy, our_test=our_testX, our_ytest=our_testy)
+    #return trainX, trainy, validationX, validationy, cifar_testX, cifar_testy, our_testX, our_testy
 
 
 if __name__ == '__main__':
-    writre_data_to_npz_file()
-
+    write_data_to_npz_file()
 

@@ -1,8 +1,9 @@
+
 import pandas as pd
 from os.path import exists
 import os
 import params
-import extract_images_from_pickle as extract
+from DATA import extract_images_from_pickle as extract
 import pickle
 
 cols = params.csv_cols
