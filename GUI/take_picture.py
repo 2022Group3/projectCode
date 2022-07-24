@@ -1,7 +1,7 @@
 import cv2
 
 def capture():
-
+    print("fjj")
     cam_port = 0
     cam = cv2.VideoCapture(cam_port)
 
