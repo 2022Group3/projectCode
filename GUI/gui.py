@@ -178,7 +178,7 @@ class predict_image(QWidget):
 
     def show_browse(self):
         print("show_browse")
-        path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.png)')[0]
+        path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.*)')[0]
         if path:
             self.show_image(path)
 

@@ -7,7 +7,7 @@ import params
 
 
 model = load_model(params.model_path)
-labels=extract.get_labels_name()
+labels=extract.label_cifar10()+extract.label_cifar100()
 print(labels)
 
 def load_image(filename):
