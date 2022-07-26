@@ -1,4 +1,7 @@
+from ctypes.wintypes import RGB
+
 import cv2
+from PIL import ImageOps, Image
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QSize, QRect
 from PyQt5.QtGui import QPixmap, QMouseEvent
@@ -176,9 +179,16 @@ class predict_image(QWidget):
         self.predict_data.setAlignment(QtCore.Qt.AlignCenter)
         self.predict_data.setFont(QtGui.QFont(font))
 
+
+    def not_sure_alert(self, out_of_distribution, confidance):
+        # label = self.combo_box.currentText()
+        if out_of_distribution:
+            QMessageBox.about(self, "massage", "Image might be out of distribution!")
+        elif not confidance:
+            QMessageBox.about(self, "massage", "I'm not confident🤔")
     def show_browse(self):
         print("show_browse")
-        path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.*)')[0]
+        path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.png)')[0]
         if path:
             self.show_image(path)
 
@@ -192,36 +202,43 @@ class predict_image(QWidget):
 
     def convert_image_to_square(self,image_path):
         print("convert_image_to_square")
+        image= Image.open(image_path)
         print(image_path)
-        image=cv2.imread(image_path)
-        print(image)
-        h = image.shape[0]
-        w = image.shape[1]
+        print("a")
+        #image=cv2.imread(image_path)
+        h = image.height
+        w = image.width
         border_top=0
         border_bottom=0
         border_right=0
         border_left=0
-        print(image.shape)
+        #print(image.shape)
         if h < w:
             border_top=(w-h)//2
             border_bottom=border_top
         else:
             border_left=(h-w)//2
             border_right=border_left
-        image=cv2.copyMakeBorder(image, border_top, border_bottom, border_left, border_right, cv2.BORDER_CONSTANT, None, value=(240, 240, 240))
-        image=cv2.resize(image, (400,400), interpolation = cv2.INTER_AREA)
-        cv2.imwrite(r"seq.png", image)
+        # top, right, bottom, left
+        border = (border_right,border_top, border_left, border_bottom)
+        image = ImageOps.expand(image, border=border, fill=RGB(240,240,240))
+        #image=cv2.copyMakeBorder(image, border_top, border_bottom, border_left, border_right, cv2.BORDER_CONSTANT, None, value=(240, 240, 240))
+        image=image.resize((400,400))
+        image.save(r"seq.png")
 
     def show_take_picture(self):
         path= take_picture.capture()
         if path:
                 self.show_image(path)
 
-    def show_predict_on_labels(self,img):
+    def show_predict_on_labels(self, img):
         print("show_predict_on_labels")
-        pred1, prob1, pred2, prob2 = model_predict.predict_image(img)
-        self.predict_data.setText(f"first place: {pred1} {str(round(prob1, 2))}%\nsecond place: {pred2} {str(round(prob2, 2))}%")
+        pred1, prob1, pred2, prob2, out_of_distribution, confidance = model_predict.predict_image(img)
+        self.not_sure_alert(out_of_distribution, confidance)
+        self.predict_data.setText(
+            f"first place: {pred1} {str(round(prob1, 2))}%\nsecond place: {pred2} {str(round(prob2, 2))}%")
         self.predict.setText("classified as " + pred1)
+
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -247,7 +264,7 @@ class MainWindow(QMainWindow):
 
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    sys.exit(app.exec_())
+
+app = QApplication(sys.argv)
+window = MainWindow()
+sys.exit(app.exec_())

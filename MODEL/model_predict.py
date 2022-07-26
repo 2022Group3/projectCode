@@ -7,9 +7,7 @@ import params
 
 
 model = load_model(params.model_path)
-labels_cifar_100=extract.label_cifar100()
-chozen_labels=[labels_cifar_100[x] for x in params.chosen_label]
-labels=extract.label_cifar10()+chozen_labels
+labels=extract.label_cifar10()+extract.label_cifar100()
 labels=[labels[i].decode('UTF-8') for i in range(0,len(labels))]
 print(labels)
 
@@ -25,10 +23,21 @@ def load_image(filename):
 def predict_image(img):
     print("predict_image")
     predict_x = model.predict(img,verbose=0)
+    print((predict_x[0]))
     classes_x1 = np.argmax(predict_x, axis=1)
+    print(classes_x1)
     first_prob=(predict_x[0])[classes_x1][0]*100
     predict_x[0][classes_x1]=0.0
     classes_x2 = np.argmax(predict_x, axis=1)
     second_prob=(predict_x[0])[classes_x2][0]*100
-    return labels[classes_x1[0]],first_prob,labels[classes_x2[0]],second_prob
+    # print(labels[classes_x1[0]])
+    # print(classes_x1[0])
+    # print(labels)
+    out_of_distribution = False;
+    if (first_prob + second_prob < 50):
+        out_of_distribution = True
+    confidance = True
+    if (first_prob - second_prob < 15):
+        confidance = False
+    return labels[classes_x1[0]], first_prob, labels[classes_x2[0]], second_prob, out_of_distribution, confidance
 
