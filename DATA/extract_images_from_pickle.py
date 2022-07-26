@@ -4,7 +4,7 @@ import pickle
 import cv2
 import os
 import params
-from DATA import create_data_csv
+# from DATA import create_data_csv
 
 
 def unpickle(file):
