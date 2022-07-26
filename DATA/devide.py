@@ -3,22 +3,22 @@ import pandas as pd
 import numpy as np
 import params
 from os.path import exists
-def destroy_labels(csv_data=params.csv_path, percents=10):
-    if exists(csv_data):
-        df = pd.read_csv(csv_data)
-    train_df=df[df[params.csv_cols[6]]=='train']
-    validation_df=df[df[params.csv_cols[6]]=='validation']
-    test_df=df[df[params.csv_cols[6]]=='test']
-    train_df = train_df.sample(frac=1).reset_index(drop=True)
-    train_df_len = len(train_df.index)
-    df_len_percents=int(train_df_len*(percents/100))
-    train_df_percents=train_df[:df_len_percents]
-    # print(train_df[params.csv_cols[4]])
-    train_df_percents[[params.csv_cols[4]]] = np.random.permutation(train_df_percents[[params.csv_cols[4]]].values)
-    # print(train_df[params.csv_cols[4]])
-    final_df=train_df_percents.append(train_df[df_len_percents:]).append(validation_df).append(test_df)
-    print(final_df)
-    final_df.to_csv(params.destroy_label_csv_path, index=False)
+# def destroy_labels(csv_data=params.csv_path, percents=10):
+#     if exists(csv_data):
+#         df = pd.read_csv(csv_data)
+#     train_df=df[df[params.csv_cols[6]]=='train']
+#     validation_df=df[df[params.csv_cols[6]]=='validation']
+#     test_df=df[df[params.csv_cols[6]]=='test']
+#     train_df = train_df.sample(frac=1).reset_index(drop=True)
+#     train_df_len = len(train_df.index)
+#     df_len_percents=int(train_df_len*(percents/100))
+#     train_df_percents=train_df[:df_len_percents]
+#     # print(train_df[params.csv_cols[4]])
+#     train_df_percents[[params.csv_cols[4]]] = np.random.permutation(train_df_percents[[params.csv_cols[4]]].values)
+#     # print(train_df[params.csv_cols[4]])
+#     final_df=train_df_percents.append(train_df[df_len_percents:]).append(validation_df).append(test_df)
+#     print(final_df)
+#     final_df.to_csv(params.destroy_label_csv_path, index=False)
 
 
 def train_validate_test_split(csv_data=params.csv_path, train_percent=0.6, validate_percent=0.1, seed=None):
