@@ -17,8 +17,15 @@ def imgs_and_labels_from_df(df):
         labels.append(row[params.csv_cols[3]])
     return images, labels
 
+def dirty_labels(train_y,percents=10):
+    len_percents=int(train_y*(percents/100))
+    random_indexes=np.random.randint(0,len(train_y),len_percents)
+    for i in random_indexes:
+        train_y[i]=np.random.randint(0,15)
+    return train_y
 
-def write_data_to_npz_file():
+
+def write_data_to_npz_file(data_name_zip,dirty=False,percents=10,):
     # load csv
     df = create_data_csv.load_csv()
     train_df = df[df[params.csv_cols[6]] == 'train']
@@ -34,11 +41,13 @@ def write_data_to_npz_file():
     cifar_testX, cifar_testy = imgs_and_labels_from_df(cifar_test_df)
     our_testX, our_testy = imgs_and_labels_from_df(our_test_df)
 
+    if(dirty==True):
+        trainy=dirty_labels(trainy,percents)
 
     # # one hot encode target values
     # trainY = to_categorical(trainY)
     # testY = to_categorical(testY)
-    np.savez('data_modified.npz', train=trainX, ytrain=trainy, validation=validationX, yvalidation=validationy,
+    np.savez(data_name_zip, train=trainX, ytrain=trainy, validation=validationX, yvalidation=validationy,
              test=testX, ytest=testy,
              cifar_test=cifar_testX, cifar_ytest=cifar_testy, our_test=our_testX, our_ytest=our_testy)
     return trainX, trainy, validationX, validationy, cifar_testX, cifar_testy, our_testX, our_testy
@@ -46,4 +55,5 @@ def write_data_to_npz_file():
 
 if __name__ == '__main__':
     write_data_to_npz_file()
+
 

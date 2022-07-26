@@ -8,7 +8,7 @@ import pickle
 
 cols = params.csv_cols
 base_dir = params.base_dir
-
+labels=extract.get_labels_name()
 
 # write to csv
 def data_to_csv(data_frame):
@@ -18,16 +18,21 @@ def data_to_csv(data_frame):
         data_frame.to_csv(params.csv_path, mode='a', index=False, header=cols)
 
 
+# def covert_label_to_index(label_name):
+#     return labels.index(label_name)
+# label_ind=[range(0,len(params.chosen_label))]
+# label_ind+=10
+
 # create dataFrame from cfar100
 def cifar100_to_df():
     train = extract.unpickle(os.path.join(params.base_dir, "cifar-100-python", "train"))
     test = extract.unpickle(os.path.join(params.base_dir, "cifar-100-python", "test"))
     names = extract.label_cifar100()
-    train_current_labels = [x+10 for x in train[b'coarse_labels']]
-    test_current_labels = [x+10 for x in test[b'coarse_labels']]
+    train_current_labels = [params.chosen_label.index(x)+10 if x in params.chosen_label else -1 for x in train[b'coarse_labels']]
+    test_current_labels = [params.chosen_label.index(x)+10 if x in params.chosen_label else -1 for x in test[b'coarse_labels']]
     chosen_label = params.chosen_label
     # train dataFrame
-    list_file_names = [x.decode('utf-8') for x in train[b'filenames']]
+    list_file_names = [x.decode('utf-8') for x in train[b'filenames'] ]
     df_train = pd.DataFrame({cols[0]: list_file_names, cols[1]: 'train', cols[2]: train[b'coarse_labels'],
                              cols[3]: train_current_labels, cols[4]: "", cols[5]: 'cifar100', cols[6]: ''})
     # test dataFrame
@@ -66,6 +71,6 @@ def cifar10_to_df():
 def load_csv():
     return pd.read_csv(params.csv_path)
 
-# if __name__ == '__main__':
-#      cfar10_to_df()
-#      cfar100_to_df()
+if __name__ == '__main__':
+     cifar10_to_df()
+     cifar100_to_df()
