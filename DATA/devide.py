@@ -40,6 +40,7 @@ def train_validate_test_split(csv_data=params.csv_path, train_percent=0.6, valid
     #     dataframe.to_csv(csv_data, index=False)
     #     return dataframe
 
+
     if exists(params.csv_path):
         df = pd.read_csv(csv_data)
         # np.random.seed(seed)

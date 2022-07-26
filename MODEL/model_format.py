@@ -16,6 +16,7 @@ def imgs_and_labels_from_df(df):
         images.append(img)
         labels.append(row[params.csv_cols[3]])
     return images, labels
+
 def dirty_labels(train_y,percents=10):
     len_percents=int(train_y*(percents/100))
     random_indexes=np.random.randint(0,len(train_y),len_percents)
