@@ -1,19 +1,33 @@
 import cv2
 
 def capture():
-    print("fjj")
-    cam_port = 0
-    cam = cv2.VideoCapture(cam_port)
+    '''
+    func to open camera and take a picture
+    :return: path to the capture image
+    '''
+    cam = cv2.VideoCapture(0)
 
-    # reading the input using the camera
-    result, image = cam.read()
+    cv2.namedWindow("capture")
 
-    if result:
-        path_img=r"cam.png"
-        print(image.shape)
-        image = image[0:480, 80:560]#capture a square image
+    img_name=""
+    while True:
+        ret, frame = cam.read()
+        if not ret:
+            print("failed to grab frame")
+            break
+        cv2.imshow("capture", frame)
 
-        cv2.imwrite(path_img, image)
-        return path_img
-    else:
-        return None
+
+        k = cv2.waitKey(1)
+        if k%256 == 27:
+            # ESC pressed
+            print("Escape hit, closing...")
+            break
+        elif k%256 == 32:
+            # SPACE pressed
+            img_name = r"cam.png"
+            cv2.imwrite(img_name, frame)
+            break
+    cam.release()
+    cv2.destroyAllWindows()
+    return img_name

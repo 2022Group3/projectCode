@@ -7,7 +7,7 @@ import params
 # from DATA import create_data_csv
 
 
-def unpickle(file):
+def unpickle(file:str):
     with open(file, 'rb') as fo:
         d = pickle.load(fo, encoding='bytes')
     return d
@@ -20,7 +20,7 @@ def get_labels_name():
     labels = labelscifar10 + labelscifar100_chosen
     return labels
 
-def load_cifar10_pickle(path, file):
+def load_cifar10_pickle(path:str, file:str):
     dict = unpickle(os.path.join(path, file))
     images = dict[b'data']
     images = np.reshape(images, (len(images), 3, 32, 32))
@@ -30,7 +30,7 @@ def load_cifar10_pickle(path, file):
     return images, labels, image_name
 
 
-def save_cifar_image(array, path):
+def save_cifar_image(array, path:str):
     # array is 3x32x32. cv2 needs 32x32x3
     array = array.transpose(1, 2, 0)
     # array is RGB. cv2 needs BGR

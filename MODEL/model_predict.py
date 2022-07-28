@@ -7,8 +7,9 @@ import params
 
 
 model = load_model(params.model_path)
-labels=extract.label_cifar10()+extract.label_cifar100()
-labels=[labels[i].decode('UTF-8') for i in range(0,len(labels))]
+# labels=extract.label_cifar10()+extract.label_cifar100()
+# labels=[labels[i].decode('UTF-8') for i in range(0,len(labels))]
+labels=extract.get_labels_name()
 print(labels)
 
 def load_image(filename):
