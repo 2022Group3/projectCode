@@ -166,8 +166,8 @@ class predict_image(QWidget):
 
         self.reset_image = QPushButton(self)
         self.reset_image.clicked.connect(self.return_to_the_base_img)
-        self.reset_image.setGeometry(QtCore.QRect(389, 111, 50, 50))
-        self.reset_image.setIcon(QIcon(r"C:\D\bootcamp\project\projectCode\GUI\icon.png"))
+        self.reset_image.setGeometry(QtCore.QRect(31, 111, 50, 50))
+        self.reset_image.setIcon(QIcon(r'icon.png'))
         self.reset_image.setIconSize(QSize(50, 50))
 
         self.predict_button = QPushButton("PREDICT", self)
@@ -181,7 +181,7 @@ class predict_image(QWidget):
         self.predict.setGeometry(QtCore.QRect(30, 570, 410, 45))
         self.predict.setStyleSheet("background-color: rgb(230,250, 250);border: 1px solid black;")
         self.predict.setAlignment(QtCore.Qt.AlignCenter)
-        self.predict.setFont(QtGui.QFont(font))
+        self.predict.setFont(QtGui.QFont(fontb))
 
         self.predict_data = QLabel(self)
         self.predict_data.setGeometry(QtCore.QRect(30, 625, 410, 50))
@@ -209,7 +209,7 @@ class predict_image(QWidget):
 
     def show_browse(self):
         print("show_browse")
-        path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.png)')[0]
+        path = QFileDialog.getOpenFileName(None, 'Load motor', '', 'Motor Files (*.*)')[0]
         if path:
             self.predict_button.setEnabled(True)
             image = Image.open(path)
@@ -287,8 +287,8 @@ class MainWindow(QWidget):
         self.predict_image=predict_image(self)
         self.add_image=add_image(self)
         self.tabWidget = QTabWidget()
-        self.tabWidget.addTab(self.predict_image, "        Predict-an-image        ")
-        self.tabWidget.addTab(self.add_image,"          Add-an-image          ")
+        self.tabWidget.addTab(self.predict_image, "    Predict-an-image   ")
+        self.tabWidget.addTab(self.add_image,"      Add-an-image      ")
         self.tabWidget.setFont(QtGui.QFont(font1))
         self.setWindowTitle("classification project Group3")
         layout.addWidget(self.tabWidget)
@@ -299,7 +299,6 @@ app = QApplication(sys.argv)
 window = MainWindow()
 window.show()
 sys.exit(app.exec_())
-
 
 
 
