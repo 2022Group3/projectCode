@@ -11,17 +11,13 @@ base_dir = params.base_dir
 labels=extract.get_labels_name()
 
 # write to csv
-def data_to_csv(data_frame):
-    if exists(params.csv_path):
-        data_frame.to_csv(params.csv_path, mode='a', index=False, header=False)
+def data_to_csv(data_frame,path=params.csv_path,cols=params.csv_cols):
+    if exists(path):
+        data_frame.to_csv(path, mode='a', index=False, header=False)
     else:
-        data_frame.to_csv(params.csv_path, mode='a', index=False, header=cols)
+        print(len(data_frame))
+        data_frame.to_csv(path, mode='a', index=False, header=cols)
 
-
-# def covert_label_to_index(label_name):
-#     return labels.index(label_name)
-# label_ind=[range(0,len(params.chosen_label))]
-# label_ind+=10
 
 # create dataFrame from cfar100
 def cifar100_to_df():
@@ -68,8 +64,8 @@ def cifar10_to_df():
         data_to_csv(df)
 
 
-def load_csv():
-    return pd.read_csv(params.csv_path)
+def load_csv(path=params.csv_path):
+    return pd.read_csv(path)
 
 if __name__ == '__main__':
      cifar10_to_df()
