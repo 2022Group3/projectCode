@@ -35,10 +35,10 @@ def predict_image(img):
     # print(classes_x1[0])
     # print(labels)
     out_of_distribution = False;
-    if (first_prob + second_prob < 50):
+    if (first_prob + second_prob < 85):
         out_of_distribution = True
     confidance = True
-    if (first_prob - second_prob < 15):
+    if (first_prob - second_prob < 70):
         confidance = False
     return labels[classes_x1[0]], first_prob, labels[classes_x2[0]], second_prob, out_of_distribution, confidance
 
