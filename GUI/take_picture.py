@@ -1,11 +1,11 @@
 import logging
 import cv2
 
-def capture():
-    '''
+def capture() -> None:
+    """
     func to open camera and take a picture
     :return: path to the capture image
-    '''
+    """
     logging.info("capture")
     cam = cv2.VideoCapture(0)
 
