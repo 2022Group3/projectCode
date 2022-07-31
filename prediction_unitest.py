@@ -1,16 +1,17 @@
 import unittest
-import model_predict
-from faker import Faker
+from MODEL import model_predict
 
 class TestUnchangingPrediction(unittest.TestCase):
 
     def test_picture_predaction(self):
-        img='Ship_diagram-numbers.svg.png'
-        pred=99.86
-        pred1, newPred, pred2, prob2 = model_predict.predict_image(img)
-        #newPred=model_predict.predict_image(img)
-        newPred=(round(newPred, 2))
-        self.assertEqual(pred, newPred)
+        img_path = r"C:\Users\user1\Downloads\automobile2.png"
+        img = model_predict.load_image(img_path)
+        pred = "automobile"
+        prob = 99
+        pred1, prob1, pred2, prob2,_,_ = model_predict.predict_image(img)
+        self.assertEqual(pred1, pred)
+        self.assertLessEqual(prob,prob1)
+
 
 if __name__ == '__main__':
     unittest.main()

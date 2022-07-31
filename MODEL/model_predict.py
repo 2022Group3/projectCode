@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.utils import img_to_array
@@ -5,10 +6,7 @@ from keras.models import load_model
 from DATA import extract_images_from_pickle as extract
 import params
 
-
 model = load_model(params.model_path)
-# labels=extract.label_cifar10()+extract.label_cifar100()
-# labels=[labels[i].decode('UTF-8') for i in range(0,len(labels))]
 labels=extract.get_labels_name()
 print(labels)
 
@@ -21,6 +19,7 @@ def load_image(filename):
     img = img / 255.0
     return img
 
+
 def predict_image(img):
     print("predict_image")
     predict_x = model.predict(img,verbose=0)
@@ -31,14 +30,27 @@ def predict_image(img):
     predict_x[0][classes_x1]=0.0
     classes_x2 = np.argmax(predict_x, axis=1)
     second_prob=(predict_x[0])[classes_x2][0]*100
-    # print(labels[classes_x1[0]])
-    # print(classes_x1[0])
-    # print(labels)
-    out_of_distribution = False;
-    if (first_prob + second_prob < 85):
-        out_of_distribution = True
+    out_of_distribution = False
     confidance = True
-    if (first_prob - second_prob < 70):
+    dif = first_prob - second_prob
+
+    # if first_prob + second_prob < 90 and first_prob < 50:
+    #     out_of_distribution = True
+    # elif dif < 70:
+    #     confidance = False
+
+    # if dif < 30 and first_prob < 40:
+    #     out_of_distribution = True
+    # elif dif < 45:
+    #     confidance = False
+
+    # if first_prob < 20:
+    #     out_of_distribution = True
+    # elif first_prob >= 20 and first_prob < 70:
+    #     confidance = False
+    #
+    # if first_prob + second_prob < 80:
+    #     out_of_distribution = True
+    if second_prob != 0 and first_prob / second_prob < 6:
         confidance = False
     return labels[classes_x1[0]], first_prob, labels[classes_x2[0]], second_prob, out_of_distribution, confidance
-
