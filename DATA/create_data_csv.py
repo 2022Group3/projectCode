@@ -10,9 +10,8 @@ base_dir = params.base_dir
 labels=extract.get_labels_name()
 
 # write to csv
-def data_to_csv(data_frame,path=params.csv_path,cols=params.csv_cols):
+def data_to_csv(data_frame:pd.DataFrame,path=params.csv_path,cols=params.csv_cols) -> None:
     logging.info("data_to_csv")
-    logging.info(path)
     if exists(path):
         data_frame.to_csv(path, mode='a', index=False, header=False)
     else:
@@ -20,7 +19,7 @@ def data_to_csv(data_frame,path=params.csv_path,cols=params.csv_cols):
 
 
 # create dataFrame from cfar100
-def cifar100_to_df():
+def cifar100_to_df() -> None:
     logging.info("cifar100_to_df")
     train = extract.unpickle(os.path.join(params.base_dir, "cifar-100-python", "train"))
     test = extract.unpickle(os.path.join(params.base_dir, "cifar-100-python", "test"))
@@ -43,7 +42,7 @@ def cifar100_to_df():
 
 
 # create dataFrame from batch
-def batch_df(dict, batch_label, names):
+def batch_df(dict:dict, batch_label:str, names:list[str]) -> pd.DataFrame:
     logging.info("batch_df")
     # create dataframe
     list_file_names = [x.decode('utf-8') for x in dict[b'filenames']]
@@ -55,7 +54,7 @@ def batch_df(dict, batch_label, names):
 
 
 # create dataFrame from cifar10
-def cifar10_to_df():
+def cifar10_to_df() -> None:
     logging.info("cifar10_to_df")
     names = extract.label_cifar10()
     batch_files = [fn for fn in os.listdir(f'{base_dir}\\cifar-10-batches-py')
@@ -76,7 +75,7 @@ def load_csv(path=params.csv_path) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-def extract_cifar():
+def extract_cifar() -> None:
     logging.info("extract_cifar")
     cifar10_to_df()
     cifar100_to_df()
