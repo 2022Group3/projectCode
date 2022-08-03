@@ -7,11 +7,10 @@ from DATA import extract_images_from_pickle as extract
 import params
 
 model = load_model(params.model_path)
-labels=extract.get_labels_name()
-print(labels)
+labels = extract.get_labels_name()
 
-def load_image(filename):
-    print("load_image")
+
+def load_image(filename: str) -> list[list[float]]:
     img = load_img(filename, target_size=(32, 32))
     img = img_to_array(img)
     img = img.reshape(1, 32, 32, 3)
@@ -20,20 +19,21 @@ def load_image(filename):
     return img
 
 
-def predict_image(img):
-    print("predict_image")
-    predict_x = model.predict(img,verbose=0)
-    print((predict_x[0]))
+def predict_image(img: list[list[float]]) -> tuple[str, float, str, float, bool, bool]:
+    """
+    get the prediction for an image, and how much the model is confident
+    :param img: image you want to predict
+    :return:
+    """
+    predict_x = model.predict(img, verbose=0)
     classes_x1 = np.argmax(predict_x, axis=1)
-    print(classes_x1)
-    first_prob=(predict_x[0])[classes_x1][0]*100
-    predict_x[0][classes_x1]=0.0
+    first_prob = (predict_x[0])[classes_x1][0] * 100
+    predict_x[0][classes_x1] = 0.0
     classes_x2 = np.argmax(predict_x, axis=1)
-    second_prob=(predict_x[0])[classes_x2][0]*100
+    second_prob = (predict_x[0])[classes_x2][0] * 100
     out_of_distribution = False
-    confidance = True
-    dif = first_prob - second_prob
-
+    confidence = True
+    # dif = first_prob - second_prob
     # if first_prob + second_prob < 90 and first_prob < 50:
     #     out_of_distribution = True
     # elif dif < 70:
@@ -51,6 +51,9 @@ def predict_image(img):
     #
     # if first_prob + second_prob < 80:
     #     out_of_distribution = True
+    if first_prob + second_prob < 70:
+        out_of_distribution = True
     if second_prob != 0 and first_prob / second_prob < 6:
-        confidance = False
-    return labels[classes_x1[0]], first_prob, labels[classes_x2[0]], second_prob, out_of_distribution, confidance
+        confidence = False
+
+    return labels[classes_x1[0]], first_prob, labels[classes_x2[0]], second_prob, out_of_distribution, confidence
