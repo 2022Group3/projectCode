@@ -16,12 +16,25 @@ labelscifar10 = [x.decode('utf-8') for x in labelscifar10]
 labelscifar100 = extract.label_cifar100()
 labelscifar100 = [x.decode('utf-8') for x in labelscifar100]
 
-def save_the_img(path, img):
+def save_the_img(path:str, img:Image)->None:
+    '''
+    save image in a given path
+    :param path: image path
+    :param img: image
+    :return:
+    '''
     logging.info("save_the_img")
     cv2.imwrite(path[:-3]+"png", img)
 
 
-def save_image_to_analyze(label,img_base_path,image_name):
+def save_image_to_analyze(label:str,img_base_path:str,image_name:str)->None:
+    '''
+    save images to csv file for analysis
+    :param label: image label
+    :param img_base_path: image path
+    :param image_name: image name
+    :return:
+    '''
     logging.info("save_image_to_analyze")
     ourImages = os.path.join(params.base_dir, params.our_img_folderName)
     if not os.path.exists(ourImages):
@@ -32,16 +45,28 @@ def save_image_to_analyze(label,img_base_path,image_name):
     data=pd.DataFrame()
     data['img_name']=[image_name[:-3]+"png"]
     data['label']=[label]
-    create_data_csv.data_to_csv(data,r"D:\bootcamp\AMAT\project\img_analyze.csv",data.columns)
+    create_data_csv.data_to_csv(data,params.img_analyze_csv,data.columns)
 
 # change the img to 32X32 format
-def change_img_size(img):
+def change_img_size(img:Image)->Image:
+    '''
+    resize image to (32,32)
+    :param img: image
+    :return: resize image
+    '''
     logging.info("change_img_size")
     resized = cv2.resize(img, (32, 32), interpolation=cv2.INTER_LANCZOS4)
     return resized
 
 
-def save_single_image(label,img_base_path,image_name):
+def save_single_image(label:str,img_base_path:str,image_name:str)->None:
+    '''
+    save image to the test images
+    :param label: image label
+    :param img_base_path: image path
+    :param image_name: image name
+    :return:
+    '''
     logging.info("save_single_image")
     img = change_img_size(cv2.imread(img_base_path))
     path_to_img = os.path.join(params.base_dir, params.extract_img_folderName, label, image_name[:-3]+"png")

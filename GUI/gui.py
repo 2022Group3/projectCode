@@ -1,7 +1,7 @@
-
 import logging
 import os
 from ctypes.wintypes import RGB
+
 from PIL import ImageOps, Image
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QSize, QRect
@@ -141,11 +141,11 @@ class add_image(QWidget):
         else:
             border_left = (h - w) // 2
             border_right = border_left
-        print("1")
         border = (border_right, border_top, border_left, border_bottom)
         image_bord = ImageOps.expand(image, border=border, fill=RGB(240, 240, 240))
-        image_res = image.resize((400, 400))
+        image_res = image_bord.resize((410, 410))
         image_res.save(params.seq_img_path)
+        print("seq")
 
     def save_image(self) -> None:
         """
@@ -221,8 +221,7 @@ class predict_image(QWidget):
 
     def not_sure_alert(self, out_of_distribution: bool, confidence: bool) -> None:
         """
-
-        :param out_of_distribution: is the model doesn't recognize the image class
+        :param out_of_distribution: if the  model isn't recognize the image class
         :param confidence: is the model debate on it predict
         :return: None
         """
@@ -268,7 +267,6 @@ class predict_image(QWidget):
         """
         logging.info("convert_image_to_square")
         image = Image.open(image_path)
-        print(image_path)
         h = image.height
         w = image.width
         border_top = 0
@@ -285,6 +283,7 @@ class predict_image(QWidget):
         image_bord = ImageOps.expand(image, border=border, fill=RGB(240, 240, 240))
         image_res = image_bord.resize((410, 410))
         image_res.save(params.seq_img_path)
+        print("seq")
 
     def show_take_picture(self) -> None:
         """
